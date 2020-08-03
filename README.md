@@ -21,7 +21,7 @@ let number:Option<&u32> = manager.get::<u32>("n");
 ```
 *Now, how does any of that work??*
 
-###### Let me show you!
+## Here you go!
 In the example above, `arguman::MagicArguman::new(args)` takes in the arguments as a type `Vec<String>`. Make sure
 that the name you assign it is *mutable*. Otherwise, it won't be able to do much.
 
