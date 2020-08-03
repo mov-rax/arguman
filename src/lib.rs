@@ -3,15 +3,22 @@ use std::any::Any;
 use std::fmt::{Debug};
 use std::ops::Deref;
 
-// #[derive(PartialEq)]
-// #[derive(Clone)]
-// pub enum ArgumanTypes{ //External types
-//     U32, U64, I32, I64, F32, F64, STRING, BOOL, NONE
-// }
+// #[test]
+// fn tester(){
+//     let arguments = vec!["DUMMY", "-f", "400","-rc", "-n", "-s"].iter().map(|x| String::from(*x)).collect::<Vec<String>>();
+//     let mut man = MagicArgman::new(arguments);
+//     man.flag_solo("r")
+//         .flag_solo("c")
+//         .flag_solo("n")
+//         .flag_solo("s")
+//         .flag::<u32>("f");
 //
-// enum ArgumanValues{ //Internal valued types
-//     U32(u32), U64(u64), I32(i32), I64(i64), F32(f32), F64(f64), STRING(String), BOOL(bool), NONE
+//     let magic = (man.get::<u32>("f"), man.get::<bool>("r"), man.get::<bool>("c"), man.get::<bool>("n"));
+//     println!("values: {:?}", magic)
+//
+//
 // }
+
 #[derive(Debug)]
 pub enum MagicValue{
     VALUE(Box<dyn Any>), NONE
@@ -113,10 +120,22 @@ impl MagicArgman{
     ///Adds a flag that does not need further user input. Creates a new entry in HashMap with bool value true.
     pub fn flag_solo(&mut self, flag: &str) -> &mut Self{
         let args = self.raw_args.clone();
-        let formatted_flag = format!("-{}", flag);
-        if args.contains(&formatted_flag){
-            self.value_map.insert(String::from(flag), MagicValue::VALUE(Box::new(true)));
+        if flag.len() > 1{ // A seperate subroutine if the flag is long.
+            let formatted_flag = format!("--{}", flag); //a long solo flag
+            if args.contains(&formatted_flag){
+                self.value_map.insert(String::from(flag), MagicValue::VALUE(Box::new(true)));
+                return self;
+            }
         }
+        println!("CHECK");
+        for arg in args{
+            if arg.chars().nth(0).unwrap() == '-'{ //if first index of string has a -
+                if arg.contains(flag){
+                    self.value_map.insert(String::from(flag), MagicValue::VALUE(Box::new(true)));
+                }
+            }
+        }
+
         self
     }
 
@@ -127,6 +146,11 @@ impl MagicArgman{
             return value.opt_unwrap::<T>();
         }
         None
+    }
+
+    ///Returns true or false for the given solo flag. True if it was entered. False if it was not.
+    pub fn get_solo(&self, key:&str) -> bool{
+        self.value_map.contains_key(key)
     }
 
     ///Returns all errors that occured while parsing the user's arguments
