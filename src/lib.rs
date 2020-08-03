@@ -72,7 +72,7 @@ impl MagicArgman{
     fn flag_setter<T: std::str::FromStr + 'static>(&mut self, flag:&str){
         let args = self.raw_args.clone();
         let formatted_flag = {
-            let mut format = String::new();
+            let format:String;
             if flag.len() > 1{
                 format = format!("--{}", flag) //usually, flags with more that one character require two hyphens
             } else{

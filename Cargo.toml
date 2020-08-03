@@ -5,6 +5,8 @@ authors = ["mov-rax <csharper.work@gmail.com>"]
 edition = "2018"
 description = "Command-line argument parsing library"
 documentation = "https://github.com/mov-rax/arguman"
+keywords = ["arguments", "argument", "flags", "flag", "parser"]
+categories = ["command-line-utilities", "development-tools::cargo-plugins"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
