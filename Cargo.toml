@@ -4,6 +4,7 @@ version = "0.1.1"
 authors = ["mov-rax <csharper.work@gmail.com>"]
 edition = "2018"
 description = "Command-line argument parsing library"
+documentation = "https://docs.rs/arguman/0.1.1/arguman/"
 repository = "https://github.com/mov-rax/arguman"
 keywords = ["cli", "argument", "flags", "flag", "parser"]
 categories = ["command-line-utilities", "development-tools::cargo-plugins"]
